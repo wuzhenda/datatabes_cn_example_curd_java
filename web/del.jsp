@@ -1,5 +1,5 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="com.thxopen.dt.sys.Config" %>
+<%@ page import="com.sample.data.sys.Config" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -11,11 +11,11 @@
 <%
 
 
-    String name = request.getParameter("name");
+    String name = request.getParameter("custom_name");
     PreparedStatement stmt = null;
     Connection conn = new Config(application).getConn();
     if (conn != null) {
-        String sql = "delete from user where name = ?";
+        String sql = "delete from user where custom_name = ?";
         stmt = conn.prepareStatement(sql);
         stmt.setString(1,name);
         int flag = stmt.executeUpdate();

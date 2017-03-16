@@ -1,6 +1,6 @@
 <%@ page import="com.google.gson.Gson" %>
-<%@ page import="com.thxopen.dt.bean.User" %>
-<%@ page import="com.thxopen.dt.sys.Config" %>
+<%@ page import="com.sample.data.bean.User" %>
+<%@ page import="com.sample.data.sys.Config" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.Statement" %>
@@ -9,11 +9,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map"%>
 <%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2015/4/13
-  Time: 11:59
-  To change this template use File | Settings | File Templates.
+
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -38,7 +34,7 @@
     String recordsFiltered = "";
 
     //定义列名
-    String[] cols = {"","name", "position", "salary", "start_date", "office", "extn"};
+    String[] cols = {"custom_num","custom_name", "com_type", "country", "city", "addr", "email","phone"};
     //获取客户端需要那一列排序
     String orderColumn = "0";
     orderColumn = request.getParameter("order[0][column]");
@@ -47,30 +43,20 @@
     String orderDir = "asc";
     orderDir = request.getParameter("order[0][dir]");
 
-   /* Map map = request.getParameterMap();
-    Iterator<String> iter = map.keySet().iterator();
-    while (iter.hasNext()) {
-        String key = iter.next();
-        System.out.println("key=" + key);
-        String[] value = (String[]) map.get(key);
-        System.out.print("value=");
-        for (String v : value) {
-//            out.print(v + "  ") ;
-            System.out.println(v + "  ");
-        }
-    }*/
 
     //获取用户过滤框里的字符
     String searchValue = request.getParameter("search[value]");
 
     List<String> sArray = new ArrayList<String>();
     if (!searchValue.equals("")) {
-        sArray.add(" name like '%" + searchValue + "%'");
-        sArray.add(" position like '%" + searchValue + "%'");
-        sArray.add(" salary like '%" + searchValue + "%'");
-        sArray.add(" start_date like '%" + searchValue + "%'");
-        sArray.add(" office like '%" + searchValue + "%'");
-        sArray.add(" extn like '%" + searchValue + "%'");
+        sArray.add(" custom_num like '%" + searchValue + "%'");
+        sArray.add(" custom_name like '%" + searchValue + "%'");
+        sArray.add(" com_type like '%" + searchValue + "%'");
+        sArray.add(" country like '%" + searchValue + "%'");
+        sArray.add(" city like '%" + searchValue + "%'");
+        sArray.add(" addr like '%" + searchValue + "%'");
+        sArray.add(" email like '%" + searchValue + "%'");
+        sArray.add(" phone like '%" + searchValue + "%'");
     }
 
     String individualSearch = "";
@@ -106,15 +92,16 @@
         recordsFilteredSql += " order by " + orderColumn + " " + orderDir;
         sql += " limit " + start + ", " + length;
 
-
         rs = stmt.executeQuery(sql);
         while (rs.next()) {
-            users.add(new User(rs.getString("name"),
-                    rs.getString("position"),
-                    rs.getString("salary"),
-                    rs.getString("start_date"),
-                    rs.getString("office"),
-                    rs.getString("extn")));
+            users.add(new User(rs.getString("custom_num"),
+                    rs.getString("custom_name"),
+                    rs.getString("com_type"),
+                    rs.getString("country"),
+                    rs.getString("city"),
+                    rs.getString("addr"),
+                    rs.getString("email"),
+                    rs.getString("phone")  )  );
         }
 
         if (searchValue != "") {

@@ -1,13 +1,12 @@
-package com.thxopen.dt.sys;
+package com.sample.data.sys;
 
-import javax.servlet.ServletContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Created by Administrator on 2015/4/16.
- */
+import javax.servlet.ServletContext;
+
+
 public class Config {
     String deUrl= "jdbc:sqlite:/";
     public String url = "";
